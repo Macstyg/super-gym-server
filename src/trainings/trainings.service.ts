@@ -51,12 +51,23 @@ export class TrainingsService {
     return await new Promise((res) => res(trainings));
   }
 
-  async update(newTrainingData: TrainingInput): Promise<Training> {
-    const trainingToUpdate = find({ id: newTrainingData.id }, trainings)!;
-    const idx = findIndex({ id: newTrainingData.id }, trainings);
-    const updatedTraining = { ...trainingToUpdate, ...newTrainingData };
+  private updateTraining({ id, name }: TrainingInput): Promise<Training> {
+    const trainingToUpdate = find({ id }, trainings)!;
+    const idx = findIndex({ id }, trainings);
+    const updatedTraining = { ...trainingToUpdate, name };
     trainings[idx] = updatedTraining;
-    return await new Promise((res) => res(updatedTraining));
+    return new Promise((res) => res(updatedTraining));
+  }
+
+  private createTraining({ name }: TrainingInput): Promise<Training> {
+    const newTraining = new Training({ name });
+    trainings.push(newTraining);
+    return new Promise((res) => res(newTraining));
+  }
+
+  async createOrUpdate(newTrainingData: TrainingInput): Promise<Training> {
+    const { id } = newTrainingData;
+    return id ? await this.updateTraining(newTrainingData) : await this.createTraining(newTrainingData);
   }
 
   async remove(id: string): Promise<boolean> {

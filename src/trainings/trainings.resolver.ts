@@ -42,7 +42,7 @@ export class TrainingsResolver {
 
   @Mutation(returns => Training)
   async updateTraining(@Args('newTrainingData') newTrainingData: TrainingInput): Promise<Training> {
-    return await this.trainingsService.update(newTrainingData);
+    return await this.trainingsService.createOrUpdate(newTrainingData);
   }
 
   @Mutation(returns => Boolean)

@@ -1,19 +1,23 @@
 import { ObjectType, Field, ID } from 'type-graphql';
+import uuid from 'uuid';
 
 @ObjectType()
 export class Training {
+  constructor({ name }: { name: string }) {
+    this.name = name;
+  }
   @Field(type => ID)
-  id!: string;
+  id: string = uuid();
 
   @Field()
-  name!: string;
+  name: string = '';
 
   @Field()
-  date!: string;
+  date: string = new Date().toISOString();
 
   @Field(type => [String])
   exercises: string[] = [];
 
-  @Field()
+  @Field({ nullable: true })
   coment?: string;
 }
