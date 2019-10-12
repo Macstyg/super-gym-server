@@ -4,8 +4,9 @@ import { NotFoundException } from '@nestjs/common';
 
 import { TrainingsService } from './trainings.service';
 import { Training } from './models/training.model';
-import { TrainingInput } from './models/dto/new-training.input';
+import { TrainingInput } from './dto/new-training.input';
 import { Exercise } from './models/exercise.model';
+import { ITraining } from './interfaces/training.interface';
 
 @Resolver(of => Training)
 export class TrainingsResolver {
@@ -14,7 +15,7 @@ export class TrainingsResolver {
   ) { }
 
   @Query(returns => Training, { name: 'training' })
-  async getTraining(@Args('id') id: string): Promise<Training> {
+  async getTraining(@Args('id') id: string): Promise<ITraining> {
     const training = await this.trainingsService.findOneById(id);
     if (!training) {
       throw new NotFoundException(id);
@@ -23,7 +24,7 @@ export class TrainingsResolver {
   }
 
   @Query(returns => [Training], { name: 'trainings' })
-  async getTrainings(): Promise<Training[]> {
+  async getTrainings(): Promise<ITraining[]> {
     const trainings = await this.trainingsService.findAll();
     if (!trainings) {
       throw new NotFoundException();
@@ -31,17 +32,17 @@ export class TrainingsResolver {
     return trainings;
   }
 
-  @Query(returns => Exercise, { name: 'exercise' })
-  async getExercise(@Args('id') id: string): Promise<Exercise> {
-    const exercise = await this.trainingsService.findOneExerciseById(id);
-    if (!exercise) {
-      throw new NotFoundException();
-    }
-    return exercise;
-  }
+  // @Query(returns => Exercise, { name: 'exercise' })
+  // async getExercise(@Args('id') id: string): Promise<Exercise> {
+  //   const exercise = await this.trainingsService.findOneExerciseById(id);
+  //   if (!exercise) {
+  //     throw new NotFoundException();
+  //   }
+  //   return exercise;
+  // }
 
   @Mutation(returns => Training)
-  async updateTraining(@Args('newTrainingData') newTrainingData: TrainingInput): Promise<Training> {
+  async updateTraining(@Args('newTrainingData') newTrainingData: TrainingInput): Promise<ITraining | null> {
     return await this.trainingsService.createOrUpdate(newTrainingData);
   }
 

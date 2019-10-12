@@ -1,12 +1,14 @@
 import { InputType, Field, ID } from 'type-graphql';
 import { IsOptional, MaxLength } from 'class-validator';
+import { ObjectId } from 'mongodb';
 
-import { Training } from '../training.model';
+import { Training } from '../models/training.model';
+import { ObjectIdScalar } from '../../scalars/ObjectId';
 
 @InputType()
 export class TrainingInput implements Partial<Training> {
-  @Field(type => ID, { nullable: true })
-  id?: string;
+  @Field(type => ObjectIdScalar, { nullable: true })
+  id?: ObjectId;
 
   @Field()
   @IsOptional()

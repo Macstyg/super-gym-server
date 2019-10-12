@@ -3,42 +3,32 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
-type Exercise {
-  id: ID!
-  name: String!
-  sets: [ExerciseSet!]!
-}
-
-type ExerciseSet {
-  mesurement: String
-  reps: Int!
-  comment: String
-}
-
 type Mutation {
   updateUser(newUserData: UserInput!): User!
   updateTraining(newTrainingData: TrainingInput!): Training!
   removeTraining(id: String!): Boolean!
 }
 
+"""Mongo object id scalar type"""
+scalar ObjectId
+
 type Query {
   User(id: String!): User!
   getUsers(skip: Int = 0, take: Int = 25): [User!]!
   training(id: String!): Training!
   trainings: [Training!]!
-  exercise(id: String!): Exercise!
 }
 
 type Training {
-  id: ID!
+  id: ObjectId!
   name: String!
-  date: String!
-  exercises: [String!]!
-  coment: String
+  date: Float!
+  exercises: [String!]
+  comment: String
 }
 
 input TrainingInput {
-  id: ID
+  id: ObjectId
   name: String!
 }
 
