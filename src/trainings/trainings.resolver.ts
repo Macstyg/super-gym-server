@@ -5,7 +5,7 @@ import { NotFoundException } from '@nestjs/common';
 import { TrainingsService } from './trainings.service';
 import { Training } from './models/training.model';
 import { TrainingInput } from './dto/new-training.input';
-import { Exercise } from './models/exercise.model';
+import { Exercise } from '../exercises/models/exercise.model';
 import { ITraining } from './interfaces/training.interface';
 
 @Resolver(of => Training)
@@ -32,17 +32,8 @@ export class TrainingsResolver {
     return trainings;
   }
 
-  // @Query(returns => Exercise, { name: 'exercise' })
-  // async getExercise(@Args('id') id: string): Promise<Exercise> {
-  //   const exercise = await this.trainingsService.findOneExerciseById(id);
-  //   if (!exercise) {
-  //     throw new NotFoundException();
-  //   }
-  //   return exercise;
-  // }
-
   @Mutation(returns => Training)
-  async updateTraining(@Args('newTrainingData') newTrainingData: TrainingInput): Promise<ITraining | null> {
+  async upsertTraining(@Args('newTrainingData') newTrainingData: TrainingInput): Promise<ITraining | null> {
     return await this.trainingsService.createOrUpdate(newTrainingData);
   }
 

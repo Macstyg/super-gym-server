@@ -13,6 +13,9 @@ export class Training {
   @Field()
   name: string = '';
 
+  @Field(type => Int, { nullable: true })
+  duration: number = 0;
+
   @Field(type => Float)
   date: number = new Date().valueOf();
 

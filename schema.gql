@@ -3,10 +3,43 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Exercise {
+  id: ObjectId!
+  name: String!
+  muscleGroup: MuscleGroup
+  sets: [ExerciseSet!]!
+  measures: [String!]!
+}
+
+input ExerciseInput {
+  id: ObjectId
+  name: String!
+  muscleGroup: MuscleGroup
+  measures: [String!]
+}
+
+type ExerciseSet {
+  mesurement: String
+  reps: Int!
+  comment: String
+}
+
+enum MuscleGroup {
+  Abs
+  Back
+  Biceps
+  Chest
+  Forearm
+  LowerLeg
+  Shoulder
+  Triceps
+}
+
 type Mutation {
   updateUser(newUserData: UserInput!): User!
-  updateTraining(newTrainingData: TrainingInput!): Training!
+  upsertTraining(newTrainingData: TrainingInput!): Training!
   removeTraining(id: String!): Boolean!
+  upsertExercise(newExerciseData: ExerciseInput!): Exercise!
 }
 
 """Mongo object id scalar type"""
@@ -17,11 +50,14 @@ type Query {
   getUsers(skip: Int = 0, take: Int = 25): [User!]!
   training(id: String!): Training!
   trainings: [Training!]!
+  exercise(id: String!): Exercise!
+  exercises: [Exercise!]!
 }
 
 type Training {
   id: ObjectId!
   name: String!
+  duration: Int
   date: Float!
   exercises: [String!]
   comment: String

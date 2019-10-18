@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { UserModule } from './users/user.module';
 import { TrainingsModule } from './trainings/trainings.module';
 import { ObjectIdScalar } from './scalars/ObjectId';
+import { ExercisesModule } from './exercises/exercises.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { ObjectIdScalar } from './scalars/ObjectId';
     }),
     MongooseModule.forRoot('mongodb://localhost:27017/supergym', { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true }),
     TrainingsModule,
+    ExercisesModule,
     UserModule,
   ],
   controllers: [AppController],

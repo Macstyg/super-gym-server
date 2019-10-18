@@ -4,8 +4,8 @@ import find from 'lodash/fp/find';
 import remove from 'lodash/fp/remove';
 
 import { Training } from './models/training.model';
-import { Exercise } from './models/exercise.model';
-import { ExerciseSet } from './models/exerciseSet.model';
+import { Exercise } from '../exercises/models/exercise.model';
+import { ExerciseSet } from '../exercises/models/exerciseSet.model';
 import { TrainingInput } from './dto/new-training.input';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -24,8 +24,8 @@ export class TrainingsService {
     return await this.trainingModel.find().exec();
   }
 
-  private async updateTraining({ id, name }: TrainingInput): Promise<ITraining | null> {
-    const trainingToUpdate = this.trainingModel.findByIdAndUpdate(id, { name }, { upsert: true, new: true }).exec();
+  private async updateTraining({ id, ...rest }: TrainingInput): Promise<ITraining | null> {
+    const trainingToUpdate = this.trainingModel.findByIdAndUpdate(id, rest, { upsert: true, new: true }).exec();
     return await trainingToUpdate as ITraining;
   }
 
@@ -42,7 +42,6 @@ export class TrainingsService {
 
   async remove(id: string): Promise<any> {
     const result = await this.trainingModel.deleteOne({ _id: id }).exec();
-    console.log('result', result);
     return result;
   }
 
