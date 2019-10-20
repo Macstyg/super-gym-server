@@ -7,7 +7,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './users/user.module';
 import { TrainingsModule } from './trainings/trainings.module';
-import { ObjectIdScalar } from './scalars/ObjectId';
+import { ObjectIdScalar } from './common/scalars/ObjectId';
 import { ExercisesModule } from './exercises/exercises.module';
 
 @Module({

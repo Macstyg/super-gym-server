@@ -3,7 +3,7 @@ import { IsOptional, MaxLength } from 'class-validator';
 import { ObjectId } from 'mongodb';
 
 import { Training } from '../models/training.model';
-import { ObjectIdScalar } from '../../scalars/ObjectId';
+import { ObjectIdScalar } from '../../common/scalars/ObjectId';
 import { Exercise } from '../../exercises/models/exercise.model';
 
 @InputType()

@@ -2,8 +2,8 @@ import { ObjectType, Field, Float } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 
 import { ExerciseSet } from './exerciseSet.model';
-import { ObjectIdScalar } from '../../scalars/ObjectId';
-import { MuscleGroup } from '../../enums/MuscleGroup';
+import { ObjectIdScalar } from '../../common/scalars/ObjectId';
+import { MuscleGroup } from '../../common/enums/MuscleGroup';
 
 @ObjectType()
 export class TrainingExercise {
