@@ -6,10 +6,17 @@ import { Exercise } from './models/exercise.model';
 import { IExercise } from './interfaces/exercise.interface';
 import { ExercisesService } from './exercises.service';
 import { ExerciseInput } from './dto/new-exercise.input';
+import { TrainingExercise } from './models/trainingExercise.model';
+import { ITrainingExercise } from './interfaces/trainingExercise.interface';
+import { TrainingExerciseInput } from './dto/new-training-exercise.input';
+import { TrainingsService } from '../trainings/trainings.service';
 
 @Resolver(of => Exercise)
 export class ExercisesResolver {
-  constructor(private readonly exerciseService: ExercisesService) { }
+  constructor(
+    private readonly exerciseService: ExercisesService,
+    private readonly trainingsService: TrainingsService,
+  ) { }
 
   @Query(returns => Exercise, { name: 'exercise' })
   async getExercise(@Args('id') id: string): Promise<IExercise> {
@@ -28,5 +35,15 @@ export class ExercisesResolver {
   @Mutation(returns => Exercise)
   async upsertExercise(@Args('newExerciseData') newExerciseData: ExerciseInput): Promise<IExercise | null> {
     return await this.exerciseService.createOrUpdate(newExerciseData);
+  }
+
+  @Mutation(returns => TrainingExercise)
+  async upsertTrainingExercise(@Args('newTrainingExerciseData') newTrainingExerciseData: TrainingExerciseInput): Promise<ITrainingExercise | null> {
+    const updatedTrainingExercise = await this.exerciseService.upsertTrainingExercise(newTrainingExerciseData);
+    if (!updatedTrainingExercise) {
+      throw NotFoundException;
+    }
+    this.trainingsService.createOrUpdate({ id: newTrainingExerciseData.trainingId, exercises: [updatedTrainingExercise.id] });
+    return updatedTrainingExercise;
   }
 }

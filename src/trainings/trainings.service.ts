@@ -29,8 +29,8 @@ export class TrainingsService {
     return await trainingToUpdate as ITraining;
   }
 
-  private async createTraining({ name }: TrainingInput): Promise<ITraining> {
-    const newTrainingVM = new Training({ name });
+  private async createTraining(data: TrainingInput): Promise<ITraining> {
+    const newTrainingVM = new Training(data);
     const newTraining = new this.trainingModel(newTrainingVM);
     return await newTraining.save();
   }

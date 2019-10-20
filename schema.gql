@@ -7,7 +7,6 @@ type Exercise {
   id: ObjectId!
   name: String!
   muscleGroup: MuscleGroup
-  sets: [ExerciseSet!]!
   measures: [String!]!
 }
 
@@ -18,21 +17,15 @@ input ExerciseInput {
   measures: [String!]
 }
 
-type ExerciseSet {
-  mesurement: String
-  reps: Int!
-  comment: String
-}
-
 enum MuscleGroup {
-  Abs
-  Back
-  Biceps
-  Chest
-  Forearm
-  LowerLeg
-  Shoulder
-  Triceps
+  ABS
+  BACK
+  BICEPS
+  CHEST
+  FOREARM
+  LOWER_LEG
+  SHOULDER
+  TRICEPS
 }
 
 type Mutation {
@@ -40,6 +33,7 @@ type Mutation {
   upsertTraining(newTrainingData: TrainingInput!): Training!
   removeTraining(id: String!): Boolean!
   upsertExercise(newExerciseData: ExerciseInput!): Exercise!
+  upsertTrainingExercise(newTrainingExerciseData: TrainingExerciseInput!): TrainingExercise!
 }
 
 """Mongo object id scalar type"""
@@ -59,13 +53,34 @@ type Training {
   name: String!
   duration: Int
   date: Float!
-  exercises: [String!]
+  exercises: [ObjectId!]
   comment: String
+  isActive: Boolean!
+}
+
+type TrainingExercise {
+  id: ObjectId!
+  trainingId: ObjectId!
+  name: String!
+  muscleGroup: MuscleGroup
+  sets: [ObjectId!]!
+  measures: [String!]!
+}
+
+input TrainingExerciseInput {
+  id: ObjectId
+  trainingId: ObjectId!
+  name: String!
+  muscleGroup: MuscleGroup
+  measures: [String!]
+  sets: [ObjectId!] = []
 }
 
 input TrainingInput {
   id: ObjectId
   name: String!
+  isActive: Boolean!
+  exercises: [ObjectId!]
 }
 
 type User {

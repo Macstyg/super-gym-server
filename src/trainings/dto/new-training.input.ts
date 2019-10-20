@@ -1,9 +1,10 @@
-import { InputType, Field, ID } from 'type-graphql';
+import { InputType, Field } from 'type-graphql';
 import { IsOptional, MaxLength } from 'class-validator';
 import { ObjectId } from 'mongodb';
 
 import { Training } from '../models/training.model';
 import { ObjectIdScalar } from '../../scalars/ObjectId';
+import { Exercise } from '../../exercises/models/exercise.model';
 
 @InputType()
 export class TrainingInput implements Partial<Training> {
@@ -13,5 +14,11 @@ export class TrainingInput implements Partial<Training> {
   @Field()
   @IsOptional()
   @MaxLength(30)
-  name!: string;
+  name?: string;
+
+  @Field()
+  isActive?: boolean;
+
+  @Field(type => [ObjectIdScalar], { nullable: true })
+  exercises?: ObjectId[];
 }

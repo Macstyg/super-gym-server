@@ -6,7 +6,7 @@ import { ObjectIdScalar } from '../../scalars/ObjectId';
 import { MuscleGroup } from '../../enums/MuscleGroup';
 
 @ObjectType()
-export class Exercise {
+export class TrainingExercise {
   constructor({ name, muscleGroup, measures }: any) {
     this.name = name;
     this.muscleGroup = muscleGroup;
@@ -15,11 +15,17 @@ export class Exercise {
   @Field(type => ObjectIdScalar)
   id: ObjectId = new ObjectId();
 
+  @Field(type => ObjectIdScalar)
+  trainingId!: ObjectId;
+
   @Field()
   name: string = '';
 
   @Field(type => MuscleGroup, { nullable: true })
   muscleGroup?: MuscleGroup;
+
+  @Field(type => ObjectIdScalar)
+  sets: ObjectId[] = [];
 
   @Field(type => [String])
   measures: string[] = ['Reps (count)', 'Weight (kg)'];

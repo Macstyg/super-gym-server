@@ -1,11 +1,13 @@
 import { ObjectType, Field, ID, Int, Float } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 import { ObjectIdScalar } from '../../scalars/ObjectId';
+import { Exercise } from '../../exercises/models/exercise.model';
 
 @ObjectType()
 export class Training {
-  constructor({ name }: { name: string }) {
+  constructor({ name, isActive }: any) {
     this.name = name;
+    this.isActive = isActive;
   }
   @Field(type => ObjectIdScalar)
   id: ObjectId = new ObjectId();
@@ -19,9 +21,12 @@ export class Training {
   @Field(type => Float)
   date: number = new Date().valueOf();
 
-  @Field(type => [String], { nullable: true })
-  exercises: string[] = [];
+  @Field(type => [ObjectIdScalar], { nullable: true })
+  exercises: ObjectId[] = [];
 
   @Field({ nullable: true })
   comment?: string;
+
+  @Field()
+  isActive: boolean = false;
 }
