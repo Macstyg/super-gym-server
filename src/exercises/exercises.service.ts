@@ -36,8 +36,6 @@ export class ExercisesService {
 
   async findAllTrainingExercises({ trainingId }: { trainingId: ObjectId }): Promise<ITrainingExercise[]> {
     const exercises = this.trainingExerciseModel.find({ trainingId });
-    console.log('exercises', exercises);
-
     return await exercises.exec();
   }
 

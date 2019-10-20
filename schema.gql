@@ -33,7 +33,7 @@ type Mutation {
   upsertTraining(newTrainingData: TrainingInput!): Training!
   removeTraining(id: String!): Boolean!
   upsertExercise(newExerciseData: ExerciseInput!): Exercise!
-  upsertTrainingExercise(newTrainingExerciseData: TrainingExerciseInput!): TrainingExercise!
+  upsertTrainingExercise(newTrainingExerciseData: TrainingExerciseInput!): UpsertTrainingExerciseResponse!
 }
 
 """Mongo object id scalar type"""
@@ -81,6 +81,11 @@ input TrainingInput {
   name: String!
   isActive: Boolean!
   exercises: [ObjectId!]
+}
+
+type UpsertTrainingExerciseResponse {
+  trainingExercise: TrainingExercise!
+  training: Training!
 }
 
 type User {

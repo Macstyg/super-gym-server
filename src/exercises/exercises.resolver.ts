@@ -10,6 +10,9 @@ import { TrainingExercise } from './models/trainingExercise.model';
 import { ITrainingExercise } from './interfaces/trainingExercise.interface';
 import { TrainingExerciseInput } from './dto/new-training-exercise.input';
 import { TrainingsService } from '../trainings/trainings.service';
+import { ITraining } from '../trainings/interfaces/training.interface';
+import { Training } from '../trainings/models/training.model';
+import { UpsertTrainingExerciseResponse } from './types';
 
 @Resolver(of => Exercise)
 export class ExercisesResolver {
@@ -37,13 +40,23 @@ export class ExercisesResolver {
     return await this.exerciseService.createOrUpdate(newExerciseData);
   }
 
-  @Mutation(returns => TrainingExercise)
-  async upsertTrainingExercise(@Args('newTrainingExerciseData') newTrainingExerciseData: TrainingExerciseInput): Promise<ITrainingExercise | null> {
+  @Mutation(returns => UpsertTrainingExerciseResponse)
+  async upsertTrainingExercise(
+    @Args('newTrainingExerciseData') newTrainingExerciseData: TrainingExerciseInput,
+  ): Promise<{ trainingExercise: ITrainingExercise | null, training: ITraining | null }> {
     const updatedTrainingExercise = await this.exerciseService.upsertTrainingExercise(newTrainingExerciseData);
     if (!updatedTrainingExercise) {
       throw NotFoundException;
     }
-    this.trainingsService.createOrUpdate({ id: newTrainingExerciseData.trainingId, exercises: [updatedTrainingExercise.id] });
-    return updatedTrainingExercise;
+
+    const updatedTraining = await this.trainingsService.createOrUpdate({
+      id: newTrainingExerciseData.trainingId,
+      exercises: [updatedTrainingExercise.id],
+    });
+
+    return {
+      trainingExercise: updatedTrainingExercise,
+      training: updatedTraining,
+    };
   }
 }
