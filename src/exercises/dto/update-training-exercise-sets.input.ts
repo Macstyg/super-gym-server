@@ -1,9 +1,7 @@
-import { ArgsType, Field, Int, InputType } from 'type-graphql';
+import { Field, Int, InputType } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 
 import { ObjectIdScalar } from '../../common/scalars/ObjectId';
-import { Exercise } from '../models/exercise.model';
-import { ExerciseSet } from '../models/exerciseSet.model';
 
 @InputType()
 export class UpdateTrainingExerciseSetsInput {

@@ -1,6 +1,6 @@
 import { Resolver } from 'type-graphql';
 import { NotFoundException } from '@nestjs/common';
-import { Args, Query, Mutation, ResolveProperty } from '@nestjs/graphql';
+import { Args, Query, Mutation } from '@nestjs/graphql';
 
 import { Exercise } from './models/exercise.model';
 import { IExercise } from './interfaces/exercise.interface';
@@ -13,7 +13,6 @@ import { TrainingsService } from '../trainings/trainings.service';
 import { ITraining } from '../trainings/interfaces/training.interface';
 import { UpsertTrainingExerciseResponse } from './types';
 import { GetTrainingExercisesArgs } from './dto/get-training-exercises-args.input';
-import { ExerciseSet } from './models/exerciseSet.model';
 import { UpdateTrainingExerciseSetsInput } from './dto/update-training-exercise-sets.input';
 
 @Resolver(of => Exercise)

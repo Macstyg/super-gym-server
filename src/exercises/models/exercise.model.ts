@@ -1,7 +1,6 @@
-import { ObjectType, Field, Float } from 'type-graphql';
+import { ObjectType, Field } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 
-import { ExerciseSet } from './exerciseSet.model';
 import { ObjectIdScalar } from '../../common/scalars/ObjectId';
 import { MuscleGroup } from '../../common/enums/MuscleGroup';
 

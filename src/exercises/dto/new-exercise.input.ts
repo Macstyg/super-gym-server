@@ -4,7 +4,6 @@ import { ObjectId } from 'mongodb';
 import { Exercise } from '../models/exercise.model';
 import { ObjectIdScalar } from '../../common/scalars/ObjectId';
 import { MuscleGroup } from '../../common/enums/MuscleGroup';
-import { ExerciseSet } from '../models/exerciseSet.model';
 
 @InputType()
 export class ExerciseInput implements Partial<Exercise> {
@@ -19,7 +18,4 @@ export class ExerciseInput implements Partial<Exercise> {
 
   @Field(type => [String], { nullable: true })
   measures?: string[];
-
-  // @Field(type => ExerciseSet)
-  // sets?: ExerciseSet[];
 }

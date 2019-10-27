@@ -1,10 +1,8 @@
 import { InputType, Field } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 
-import { Exercise } from '../models/exercise.model';
 import { ObjectIdScalar } from '../../common/scalars/ObjectId';
 import { MuscleGroup } from '../../common/enums/MuscleGroup';
-import { ExerciseSet } from '../models/exerciseSet.model';
 import { TrainingExercise } from '../models/trainingExercise.model';
 
 @InputType()

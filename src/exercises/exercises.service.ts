@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, model } from 'mongoose';
+import { Model } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 import { IExercise } from './interfaces/exercise.interface';

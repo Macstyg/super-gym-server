@@ -1,7 +1,6 @@
-import { ObjectType, Field, ID, Int, Float } from 'type-graphql';
+import { ObjectType, Field, Int, Float } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 import { ObjectIdScalar } from '../../common/scalars/ObjectId';
-import { Exercise } from '../../exercises/models/exercise.model';
 
 @ObjectType()
 export class Training {

@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose';
-import { ExerciseSchema } from '../../exercises/schemas/exercise.schema';
 
 export const TrainingSchema = new mongoose.Schema({
   name: String,

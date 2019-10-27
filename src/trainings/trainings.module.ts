@@ -4,7 +4,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { TrainingsResolver } from './trainings.resolver';
 import { TrainingsService } from './trainings.service';
 import { TrainingSchema } from './schemas/training.schema';
-import { ExercisesService } from '../exercises/exercises.service';
 
 @Global()
 @Module({
