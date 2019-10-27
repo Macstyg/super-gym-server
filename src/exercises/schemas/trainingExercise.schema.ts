@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 
 export const TrainingExerciseSchema = new mongoose.Schema({
   name: String,
-  sets: { type: [String], default: [] },
+  sets: { type: [{ mesurement: String, reps: Number, comment: String }], default: [] },
   muscleGroup: String,
   comment: String,
   measures: { type: [String], default: ['Reps (count)', 'Weight (kg)'] },

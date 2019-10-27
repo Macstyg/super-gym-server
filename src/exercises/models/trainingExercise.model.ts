@@ -1,4 +1,4 @@
-import { ObjectType, Field, Float } from 'type-graphql';
+import { ObjectType, Field } from 'type-graphql';
 import { ObjectId } from 'mongodb';
 
 import { ExerciseSet } from './exerciseSet.model';
@@ -24,8 +24,10 @@ export class TrainingExercise {
   @Field(type => MuscleGroup, { nullable: true })
   muscleGroup?: MuscleGroup;
 
-  @Field(type => ObjectIdScalar)
-  sets: ObjectId[] = [];
+  // @Field(type => ObjectIdScalar)
+  // sets: ObjectId[] = [];
+  @Field(type => [ExerciseSet])
+  sets?: ExerciseSet[] = [];
 
   @Field(type => [String])
   measures: string[] = ['Reps (count)', 'Weight (kg)'];

@@ -23,10 +23,4 @@ export class TrainingExerciseInput implements Partial<TrainingExercise> {
 
   @Field(type => [String], { nullable: true })
   measures?: string[];
-
-  @Field(type => [ObjectIdScalar])
-  sets: ObjectId[] = [];
-
-  // @Field(type => ExerciseSet)
-  // sets?: ExerciseSet[];
 }

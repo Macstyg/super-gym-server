@@ -1,6 +1,6 @@
 import { Resolver } from 'type-graphql';
 import { NotFoundException } from '@nestjs/common';
-import { Args, Query, Mutation } from '@nestjs/graphql';
+import { Args, Query, Mutation, ResolveProperty } from '@nestjs/graphql';
 
 import { Exercise } from './models/exercise.model';
 import { IExercise } from './interfaces/exercise.interface';
@@ -11,8 +11,10 @@ import { ITrainingExercise } from './interfaces/trainingExercise.interface';
 import { TrainingExerciseInput } from './dto/new-training-exercise.input';
 import { TrainingsService } from '../trainings/trainings.service';
 import { ITraining } from '../trainings/interfaces/training.interface';
-import { Training } from '../trainings/models/training.model';
 import { UpsertTrainingExerciseResponse } from './types';
+import { GetTrainingExercisesArgs } from './dto/get-training-exercises-args.input';
+import { ExerciseSet } from './models/exerciseSet.model';
+import { UpdateTrainingExerciseSetsInput } from './dto/update-training-exercise-sets.input';
 
 @Resolver(of => Exercise)
 export class ExercisesResolver {
@@ -33,6 +35,11 @@ export class ExercisesResolver {
   @Query(returns => [Exercise], { name: 'exercises' })
   async getExercises(): Promise<IExercise[]> {
     return this.exerciseService.findAll();
+  }
+
+  @Query(returns => [TrainingExercise])
+  async getAllTrainingExercisesByTrainingId(@Args() { trainingId }: GetTrainingExercisesArgs): Promise<ITrainingExercise[]> {
+    return this.exerciseService.findAllTrainingExercises({ trainingId });
   }
 
   @Mutation(returns => Exercise)
@@ -58,5 +65,12 @@ export class ExercisesResolver {
       trainingExercise: updatedTrainingExercise,
       training: updatedTraining,
     };
+  }
+
+  @Mutation(returns => TrainingExercise)
+  async updateTrainingExerciseSets(
+    @Args('updateTrainingExerciseSetsInput') { trainingExerciseId, ...rest }: UpdateTrainingExerciseSetsInput,
+  ): Promise<ITrainingExercise> {
+    return await this.exerciseService.addSetToExercise(rest, trainingExerciseId);
   }
 }

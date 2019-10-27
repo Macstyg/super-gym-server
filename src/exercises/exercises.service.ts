@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, model } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
 import { IExercise } from './interfaces/exercise.interface';
@@ -9,6 +9,7 @@ import { Exercise } from './models/exercise.model';
 import { ITrainingExercise } from './interfaces/trainingExercise.interface';
 import { TrainingExerciseInput } from './dto/new-training-exercise.input';
 import { TrainingExercise } from './models/trainingExercise.model';
+import { ExerciseSet } from './models/exerciseSet.model';
 
 @Injectable()
 export class ExercisesService {
@@ -42,6 +43,15 @@ export class ExercisesService {
   async upsertTrainingExercise(newTrainingExerciseData: TrainingExerciseInput): Promise<ITrainingExercise | null> {
     const { id } = newTrainingExerciseData;
     return id ? await this.updateTrainingExercise(newTrainingExerciseData) : await this.createTrainingExercise(newTrainingExerciseData);
+  }
+
+  async addSetToExercise(newSet: ExerciseSet, id: ObjectId): Promise<ITrainingExercise> {
+    const modelToUpdate = await this.trainingExerciseModel.findById(id).exec();
+    if (!modelToUpdate) {
+      throw NotFoundException;
+    }
+    modelToUpdate.sets.push(newSet);
+    return await modelToUpdate.save();
   }
 
   private async updateTrainingExercise({ id, ...rest }: TrainingExerciseInput): Promise<ITrainingExercise | null> {
