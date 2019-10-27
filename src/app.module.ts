@@ -3,7 +3,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ObjectId } from 'mongodb';
 
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './users/user.module';
 import { TrainingsModule } from './trainings/trainings.module';
@@ -25,7 +24,6 @@ import { ExercisesModule } from './exercises/exercises.module';
     ExercisesModule,
     UserModule,
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule { }
